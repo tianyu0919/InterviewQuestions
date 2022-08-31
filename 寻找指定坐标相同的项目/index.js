@@ -18,8 +18,8 @@ const list = [];
 for (let i = 0; i < 10; i++) {
   let tempList = [];
   for (let j = 0; j < 10; j++) {
-    tempList.push(Math.floor(Math.random() * 3));
-    // tempList.push(2);
+    // tempList.push(Math.floor(Math.random() * 3));
+    tempList.push(2);
   }
   list.push(tempList);
 }
@@ -88,11 +88,14 @@ function render({
 };
 
 function removeClassName(clickHistory) {
-  clickHistory.forEach(({ dom }) => {
+  clickHistory.forEach(({ dom, timer }) => {
     if (dom.classList.contains('active')) {
       dom.classList.remove('active');
     } else if (dom.classList.contains('lineActive')) {
       dom.classList.remove('lineActive');
+    }
+    if(timer) {
+      clearTimeout(timer);
     }
   })
   return [];
@@ -119,14 +122,16 @@ function findDomOfCoordinate(item, saveArr) {
       } = items;
       const domText = dom.innerText;
       if (text === domText) {
-        lineItem.push(items);
         const { dom: itemsDom } = items;
+        // * 因为如果点击的过快，上次的timeout还会继续执行。添加到timer后面用于取消。
+        const copyItems = { ...items, timer: null };
         if (!itemsDom.classList.contains('active')) {
-          setTimeout(() => {
+          copyItems.timer = setTimeout(() => {
             itemsDom.classList.add('lineActive');
           }, 16 * index);
           index += 4;
         }
+        lineItem.push(copyItems);
         // * 往左走
         recursion({
           text: domText,
