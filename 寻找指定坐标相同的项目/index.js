@@ -18,8 +18,8 @@ const list = [];
 for (let i = 0; i < 10; i++) {
   let tempList = [];
   for (let j = 0; j < 10; j++) {
-    // tempList.push(Math.floor(Math.random() * 3));
-    tempList.push(2);
+    tempList.push(Math.floor(Math.random() * 3));
+    // tempList.push(2);
   }
   list.push(tempList);
 }
