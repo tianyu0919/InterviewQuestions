@@ -1,0 +1,90 @@
+<!--
+ * @Author: 归宿
+ * @Date: 2022-08-31 12:30:59
+ * @Description: 
+-->
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta name="description" content="网站的描述内容。" />
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="Author" content="归宿" />
+  <meta name="Keywords" content="关键字" />
+  <title>网页标题</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px 0;
+    }
+
+    .container .inputContainer {}
+
+    .container #content {
+      --p: 8;
+      margin-top: 10px;
+      padding: 8px;
+      box-sizing: border-box;
+      width: 300px;
+      height: 300px;
+      border: 1px solid #ccc;
+      user-select: none;
+    }
+
+    .container #content .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container #content .row+.row {
+      margin-top: 3px;
+    }
+
+    .container #content .row .column {
+      padding: 3px;
+      box-sizing: border-box;
+      border: 1px solid #eee;
+      text-align: center;
+      height: calc(var(--h) - 0.5px);
+      width: calc(var(--w) - 0.5px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .container #content .row .column+.column {
+      margin-left: 3px;
+    }
+
+    .container #content .row .column.active {
+      background-color: #bfbebe;
+    }
+
+    .container #content .row .column.lineActive {
+      background-color: #ededed;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id="content"></div>
+  </div>
+</body>
+<script type="text/javascript" src="./index.js"></script>
+
+</html>
