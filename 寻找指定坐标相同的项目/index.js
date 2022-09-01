@@ -19,8 +19,8 @@ const count = 10;
 for (let i = 0; i < count; i++) {
   let tempList = [];
   for (let j = 0; j < count; j++) {
-    // tempList.push(Math.floor(Math.random() * 3));
-    tempList.push(2);
+    tempList.push(Math.floor(Math.random() * 3));
+    // tempList.push(2);
   }
   list.push(tempList);
 }
