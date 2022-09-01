@@ -14,12 +14,13 @@ let content = document.querySelector('#content');
 // ]
 
 const list = [];
+const count = 10;
 
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < count; i++) {
   let tempList = [];
-  for (let j = 0; j < 10; j++) {
-    tempList.push(Math.floor(Math.random() * 3));
-    // tempList.push(2);
+  for (let j = 0; j < count; j++) {
+    // tempList.push(Math.floor(Math.random() * 3));
+    tempList.push(2);
   }
   list.push(tempList);
 }
@@ -65,7 +66,9 @@ function render({
       column.classList.add('column');
       column.addEventListener('click', (ev) => {
         const item = saveArr[i][j];
-        const { dom } = item;
+        const {
+          dom
+        } = item;
         if (ev.target.classList.contains('active')) {
           return;
         }
@@ -88,13 +91,16 @@ function render({
 };
 
 function removeClassName(clickHistory) {
-  clickHistory.forEach(({ dom, timer }) => {
+  clickHistory.forEach(({
+    dom,
+    timer
+  }) => {
     if (dom.classList.contains('active')) {
       dom.classList.remove('active');
     } else if (dom.classList.contains('lineActive')) {
       dom.classList.remove('lineActive');
     }
-    if(timer) {
+    if (timer) {
       clearTimeout(timer);
     }
   })
@@ -102,7 +108,11 @@ function removeClassName(clickHistory) {
 }
 
 function findDomOfCoordinate(item, saveArr) {
-  const { x, y, dom } = item;
+  const {
+    x,
+    y,
+    dom
+  } = item;
   const text = dom.innerText;
   const readyWalkArr = []; // * 记录已经走过的，就不再走了
   const lineItem = []; // * 存储相邻的。
@@ -122,9 +132,14 @@ function findDomOfCoordinate(item, saveArr) {
       } = items;
       const domText = dom.innerText;
       if (text === domText) {
-        const { dom: itemsDom } = items;
+        const {
+          dom: itemsDom
+        } = items;
         // * 因为如果点击的过快，上次的timeout还会继续执行。添加到timer后面用于取消。
-        const copyItems = { ...items, timer: null };
+        const copyItems = {
+          ...items,
+          timer: null
+        };
         if (!itemsDom.classList.contains('active')) {
           copyItems.timer = setTimeout(() => {
             itemsDom.classList.add('lineActive');
@@ -161,7 +176,11 @@ function findDomOfCoordinate(item, saveArr) {
   }
 
   // * 递归
-  recursion({ text, x, y }, saveArr);
+  recursion({
+    text,
+    x,
+    y
+  }, saveArr);
 
   return lineItem;
 }

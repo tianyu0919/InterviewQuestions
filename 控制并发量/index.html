@@ -1,0 +1,45 @@
+<!--
+ * @Author: 归宿
+ * @Date: 2022-09-01 14:27:36
+ * @Description: 
+-->
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta name="description" content="网站的描述内容。" />
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="Author" content="归宿" />
+  <meta name="Keywords" content="关键字" />
+  <title>网页标题</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+  // * 前提：由于后端的限制，最多同时可接受请求的次数为10条。如何控制并发量？
+  let requestArr = [];
+  for (let i = 0; i < 100; i++) {
+    requestArr.push(() => new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(i);
+      }, Math.random() * 3000);
+    }));
+  }
+
+  requestArr.forEach(requestItem => {
+    requestItem().then(res => {
+      console.log(res);
+    })
+  });
+
+  new Promise((res) => res(1)).then(() => console.log(1)).then(() => console.log(2));
+
+  Promise.resolve().then(() => console.log(3))
+</script>
+
+</html>
