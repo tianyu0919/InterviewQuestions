@@ -1,5 +1,5 @@
-<!--
- * @Author: 归宿
+     <!--
+ * @Author: 归宿    
  * @Date: 2022-09-01 14:27:36
  * @Description: 
 -->
@@ -23,23 +23,45 @@
 <script>
   // * 前提：由于后端的限制，最多同时可接受请求的次数为10条。如何控制并发量？
   let requestArr = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 20; i++) {
     requestArr.push(() => new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(i);
-      }, Math.random() * 3000);
+      }, random(3000, 1000));
     }));
   }
 
-  requestArr.forEach(requestItem => {
-    requestItem().then(res => {
-      console.log(res);
-    })
-  });
+  function random(max, min) {
+    return Math.random() * (max - min) + min;
+  }
 
-  new Promise((res) => res(1)).then(() => console.log(1)).then(() => console.log(2));
+  function start(limit, requestList) {
+    let runningCount = 0;
+    let tempRequestList = [...requestList];
 
-  Promise.resolve().then(() => console.log(3))
+    function recursion() {
+      for (let requestItem of tempRequestList) {
+        if (runningCount <= limit) {
+          ++runningCount;
+          requestItem().then(res => {
+            console.log(res);
+          })
+            .catch(err => { })
+            .finally(() => {
+              --runningCount;
+              tempRequestList.shift();
+              recursion();
+            })
+          document.write(runningCount);
+        }
+      }
+    }
+
+    recursion();
+  }
+
+  start(10, requestArr);
+
 </script>
 
 </html>
