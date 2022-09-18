@@ -1,7 +1,8 @@
 <!--
  * @Author: 卢天宇
  * @Date: 2022-09-18 22:21:38
- * @Description: leetcode 第三题 中等难度。
+ * @Description: leetcode 第三题 中等难度。分析：使用双指针。
+ * Date: 2022年9月19日01:59:16 完成
 -->
 <!DOCTYPE HTML>
 <html lang="zh-cn">
@@ -23,28 +24,25 @@
   function lengthOfLongestSubstring(s) {
     let n = s.length;
     let set = new Set();
-    let ans = 0;
-    let r = -1;
     let max = 0;
     for (let i = 0; i < n; i++) {
-      while (r < n) {
-        let idx = ++r;
+      let ans = 0;
+      let r = i;
+      while (r < n && r < n && !set.has(s.charAt(r))) {
+        let idx = r++;
         let str = s.charAt(idx);
-        if (!set.has(s.charAt(idx))) {
-          set.add(s.charAt(idx));
+        if (!set.has(str)) {
+          set.add(str);
           ans += 1;
-        } else {
-
         }
       }
-
-      max = Math.max()
+      set.clear();
+      max = Math.max(max, ans);
     }
     return max;
-
   }
 
-  let cases = ['abcabcaa'];
+  let cases = ["bbbbb", 'pwwkew'];
 
   cases.forEach(item => {
     let result = lengthOfLongestSubstring(item);
