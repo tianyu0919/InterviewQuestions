@@ -1,0 +1,55 @@
+<!--
+ * @Author: 卢天宇
+ * @Date: 2022-09-18 22:21:38
+ * @Description: leetcode 第三题 中等难度。
+-->
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta name="description" content="网站的描述内容。" />
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="Author" content="归宿" />
+  <meta name="Keywords" content="关键字" />
+  <title>网页标题</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  function lengthOfLongestSubstring(s) {
+    let n = s.length;
+    let set = new Set();
+    let ans = 0;
+    let r = -1;
+    let max = 0;
+    for (let i = 0; i < n; i++) {
+      while (r < n) {
+        let idx = ++r;
+        let str = s.charAt(idx);
+        if (!set.has(s.charAt(idx))) {
+          set.add(s.charAt(idx));
+          ans += 1;
+        } else {
+
+        }
+      }
+
+      max = Math.max()
+    }
+    return max;
+
+  }
+
+  let cases = ['abcabcaa'];
+
+  cases.forEach(item => {
+    let result = lengthOfLongestSubstring(item);
+    console.log(`${item}的长度---${result}`);
+  })
+</script>
+
+</html>
