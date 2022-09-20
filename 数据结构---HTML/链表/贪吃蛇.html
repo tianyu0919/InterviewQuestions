@@ -1,0 +1,97 @@
+<!--
+ * @Author: 卢天宇
+ * @Date: 2022-09-20 23:33:14
+ * @Description: 链表贪吃蛇，还没完成！
+-->
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta name="description" content="网站的描述内容。" />
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="Author" content="归宿" />
+  <meta name="Keywords" content="关键字" />
+  <title>网页标题</title>
+  <style>
+    .box {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      background-color: rebeccapurple;
+    }
+
+    .box.head {
+      background-color: green;
+    }
+
+    .box.footer {
+      background-color: yellow;
+    }
+  </style>
+</head>
+
+<body>
+
+</body>
+
+<script>
+
+  const count = 20;
+  class LinkedList {
+    constructor(value) {
+      this.value = value;
+    }
+    next() {
+
+    }
+  }
+
+  let prevLinkedList = null;
+  let linkedList = null;
+  for (let i = 0; i < count; i++) {
+    let dom = document.createElement('div');
+    dom.classList.add('box');
+    if (i === 0) {
+      dom.classList.add('head');
+    } else if (i === count - 1) {
+      dom.classList.add('footer');
+    }
+    let config = {
+      dom,
+      x: 0,
+      y: 0
+    }
+    document.body.appendChild(dom);
+    let List = new LinkedList(config);
+    if (prevLinkedList) {
+      prevLinkedList.next = List;
+    }
+    if (!linkedList) {
+      linkedList = List;
+    }
+    prevLinkedList = List;
+  }
+
+  function deep(linkList, nextLinkedList) {
+    // console.log(linkList.value)
+    let current = linkList.value;
+    current.x += 10;
+
+    current.dom.style = `left: ${current.x + 10}px;`;
+
+    if (linkList.next) {
+      deep(linkList, linkList.next);
+    }else {
+      deep(linkList);
+    }
+    requestAnimationFrame(deep);
+  }
+
+  deep(linkedList);
+</script>
+
+</html>

@@ -1,0 +1,51 @@
+<!--
+ * @Author: 卢天宇
+ * @Date: 2022-09-20 22:19:04
+ * @Description: leetcode 第三题 中等难度。分析：使用双指针。
+ * @Date: 2022年9月20日23:13:43
+-->
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta name="description" content="网站的描述内容。" />
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="Author" content="归宿" />
+  <meta name="Keywords" content="关键字" />
+  <title>网页标题</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+  /**
+  * @param { number[] } nums
+  * @returns { number[] }
+  */
+  function frequencySort(nums) {
+    let map = new Map();
+    let list = [...nums];
+    // * 创建一个hash表用来存储次数
+    list.forEach(item => {
+      map.set(item, (map.get(item) || 0) + 1);
+    });
+    list.sort((a, b) => {
+      // * 获取存在hash表里的值，查看他们的频率是否相等，如果频率不相等就按照频率从小到大排序(升序)；如果频率相等，就按照他们自身的大小从大到小排序(降序)。
+      return map.get(a) !== map.get(b) ? map.get(a) - map.get(b) : b - a;
+    });
+    return list;
+  };
+
+  const cases = [[1, 1, 2, 2, 2, 3]];
+  cases.forEach(v => {
+    const result = frequencySort(v);
+    console.log(result);
+  });
+
+</script>
+
+</html>
