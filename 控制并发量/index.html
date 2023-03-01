@@ -1,4 +1,4 @@
-     <!--
+<!--
  * @Author: 归宿    
  * @Date: 2022-09-01 14:27:36
  * @Description: 
@@ -21,13 +21,15 @@
 </body>
 
 <script>
-  // * 前提：由于后端的限制，最多同时可接受请求的次数为10条。如何控制并发量？
+  // * 前提：由于后端的限制，最多同时可接受请求的次数为 limit 条。如何控制并发量？
   let requestArr = [];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 15; i++) {
     requestArr.push(() => new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(i);
-      }, random(3000, 1000));
+      fetch('/json.json').then(res => res.text()).then(res => {
+        setTimeout(() => {
+          resolve(res);
+        }, random(5000, 1000));
+      })
     }));
   }
 
@@ -36,32 +38,34 @@
   }
 
   function start(limit, requestList) {
-    let runningCount = 0;
-    let tempRequestList = [...requestList];
+    let maxRequestCount = limit;
+    let countIdx = 0;
+    let groupId = 0;
 
     function recursion() {
-      for (let requestItem of tempRequestList) {
-        if (runningCount <= limit) {
-          ++runningCount;
-          requestItem().then(res => {
-            console.log(res);
-          })
-            .catch(err => { })
-            .finally(() => {
-              --runningCount;
-              tempRequestList.shift();
-              recursion();
-            })
-          document.write(runningCount);
-        }
+      // console.group(`group 为 ${groupId++}`);
+      // * 当前可请求数量是否大于0
+      while (maxRequestCount > 0 && countIdx < requestList.length) {
+        console.log(countIdx, maxRequestCount);
+        maxRequestCount--;
+        // console.log(maxRequestCount)
+        requestList[countIdx]().then(res => {
+          console.log(res);
+        }).catch(err => {
+          console.log('err', err);
+        }).finally(() => {
+          maxRequestCount++;
+          console.groupEnd();
+          recursion();
+        })
+        countIdx += 1;
       }
     }
 
     recursion();
   }
 
-  start(10, requestArr);
-
+  start(5, requestArr);
 </script>
 
 </html>
