@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta name="description" content="网站的描述内容。" />
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="Author" content="归宿" />
+  <meta name="Keywords" content="关键字" />
+  <title>IntersectionObserver</title>
+  <style>
+    * {
+      margin: 0px;
+    }
+
+    div+div {
+      margin-top: 20px;
+      border: 1px solid #ddd;
+    }
+
+    div {
+      text-align: center;
+    }
+
+    img {
+      width: 90vh;
+      height: 300px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+  <div><img src="" alt="" data-src="../img.jpg"></div>
+</body>
+
+<script>
+  let allImgs = document.querySelectorAll('img');
+
+  let observer = new IntersectionObserver((OBItems) => {
+    OBItems.forEach(item => {
+      if (item.intersectionRatio > 0) {
+        const {
+          target: img
+        } = item;
+        observer.unobserve(img);
+        img.setAttribute('src', img.dataset.src);
+      }
+    })
+  }, {
+    rootMargin: '0px 0px 0px 0px',
+  })
+
+  allImgs.forEach(img => {
+    observer.observe(img)
+  })
+</script>
+
+</html>
