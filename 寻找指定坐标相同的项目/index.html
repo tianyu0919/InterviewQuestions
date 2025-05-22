@@ -92,12 +92,34 @@
         ;
       }
     }
+
+    #button-group {
+      margin-top: 10px;
+    }
+
+    #button-group button.active {
+      background-color: #007bff;
+      color: #fff;
+      border: 1px solid #007bff;
+    }
+
+    #button-group button {
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+    }
+    
   </style>
 </head>
 
 <body>
   <div class="container">
     <div id="content"></div>
+    <div id="button-group">
+      <button id="button-dfs" class="active">深度优先(DFS)</button>
+      <button id="button-bfs">广度优先(BFS)</button>
+    </div>
   </div>
 </body>
 <script type="text/javascript" src="./index.js"></script>
