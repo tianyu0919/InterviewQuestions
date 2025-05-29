@@ -1,0 +1,78 @@
+/*
+ * @Author: 卢天宇
+ * @Date: 2025-05-28 17:41:21
+ * @Description:
+ */
+import React, { Component, createContext } from "react";
+
+const { Provider, Consumer } = createContext<{
+  keep: (id: string, children: React.ReactNode) => Promise<React.ReactNode>;
+}>({
+  keep: () => Promise.resolve(null),
+});
+
+const withScope =
+  (WrappedComponent: React.ComponentType<any>) => (props: any) =>
+    (
+      <Consumer>
+        {(keep) => <WrappedComponent {...props} keep={keep} />}
+      </Consumer>
+    );
+
+export class AliveScope extends Component {
+  nodes: any = {};
+  state = {};
+
+  keep = (id: string, children: React.ReactNode): Promise<React.ReactNode> =>
+    new Promise((resolve) =>
+      this.setState(
+        {
+          [id]: { id, children },
+        },
+        () => resolve(this.nodes[id])
+      )
+    );
+
+  render() {
+    return (
+      <Provider value={this.keep}>
+        {this.props.children}
+        {Object.values(this.state).map(({ id, children }) => (
+          <div
+            key={id}
+            ref={(node) => {
+              this.nodes[id] = node;
+            }}
+          >
+            {children}
+          </div>
+        ))}
+      </Provider>
+    );
+  }
+}
+
+@withScope
+class KeepAlive extends Component {
+  constructor(props) {
+    super(props);
+    this.init(props);
+  }
+
+  init = async ({ id, children, keep }) => {
+    const realContent = await keep(id, children);
+    this.placeholder.appendChild(realContent);
+  };
+
+  render() {
+    return (
+      <div
+        ref={(node) => {
+          this.placeholder = node;
+        }}
+      />
+    );
+  }
+}
+
+export default KeepAlive;

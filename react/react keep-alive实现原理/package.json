@@ -1,0 +1,27 @@
+{
+  "name": "pnpm-monorepo-react-keep-alive-实现原理",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve:qk-vite": "pnpm --filter qk-vite dev",
+    "serve:qk-router": "pnpm --filter qk-router dev"
+  },
+  "dependencies": {
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@babel/plugin-proposal-decorators": "^7.27.1",
+    "antd": "^5.25.3",
+    "qiankun": "^2.10.16",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*",
+    "qk-router",
+    "qk-vite"
+  ]
+}
