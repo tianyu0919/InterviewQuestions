@@ -1,9 +1,9 @@
 /*
  * @Author: 卢天宇
  * @Date: 2025-05-28 17:41:21
- * @Description:
+ * @Description: 类组件实现keep-alive
  */
-import React, { Component, createContext } from "react";
+import React, { Component, createContext, createRef } from "react";
 
 const { Provider, Consumer } = createContext();
 const withScope = (WrappedComponent) => (props) => {
@@ -24,8 +24,11 @@ const withScope = (WrappedComponent) => (props) => {
 };
 
 export class AliveScope extends Component {
-  nodes = {};
-  state = {};
+  constructor(props) {
+    super(props);
+    this.nodes = {};
+    this.state = {};
+  }
 
   keep = (id, children) => {
     console.group("keep");
@@ -66,23 +69,20 @@ class KeepAlive extends Component {
     super(props);
     this.init(props);
   }
+  placeholder = createRef(null);
 
   init = async ({ id, children, keep }) => {
     console.group("init");
     console.log(id, children, keep);
     console.groupEnd();
     const realContent = await keep(id, children);
-    this.placeholder.appendChild(realContent);
+    console.log("realContent", realContent);
+    console.log("this.placeholder", this);
+    this.placeholder.current.appendChild(realContent);
   };
 
   render() {
-    return (
-      <div
-        ref={(node) => {
-          this.placeholder = node;
-        }}
-      />
-    );
+    return <div ref={this.placeholder} />;
   }
 }
 
